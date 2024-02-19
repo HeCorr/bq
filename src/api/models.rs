@@ -1,4 +1,7 @@
-use crate::api::util::bool_fmt;
+pub mod games;
+
+use crate::api::util::{bool_fmt, game_fmt};
+use self::games::RustServerDetails;
 
 #[derive(Debug)]
 pub struct Player {
@@ -19,45 +22,41 @@ pub enum ServerStatus {
 }
 
 pub struct Server {
+    pub game: String,
     pub name: String,
     pub ip: String,
     pub port: u16,
+    pub address: Option<String>,
     pub players: u16,
     pub max_players: u16,
     pub rank: u16,
     pub status: ServerStatus,
-    pub official: bool,
-    pub map: String,
-    pub pve: bool,
-    pub description: String,
-    pub modded: bool,
     pub private: bool,
     pub country: String,
     pub online_players: Option<Vec<Player>>,
+    pub rust_details: Option<RustServerDetails>,
 }
-
-
 
 impl Server {
     pub fn fmt(&self, full: bool) -> String {
         if full {
             format!(
-                "{}:\n  Status: {:?}\n  Players: {}/{}\n  Country: {}\n  IP/Port: {}:{}\n  Rank: #{}\n  PVE: {}\n  Modded: {}\n  Official: {}\n  Description: {}",
-                self.name, 
+                "{}:\n  Game: {}\n  Status: {:?}\n  Players: {}/{}\n  Country: {}\n  IP/Port: {}:{}\n  Address: {}\n  Private: {}\n  Rank: #{}\n  Details: {:#?}",
+                self.name,
+                game_fmt(&self.game),
                 self.status, 
                 self.players, self.max_players,
                 self.country,
                 self.ip, self.port,
+                self.address.clone().unwrap_or("<None>".to_owned()),
+                bool_fmt(self.private),
                 self.rank,
-                bool_fmt(self.pve),
-                bool_fmt(self.modded),
-                bool_fmt(self.official),
-                self.description,
+                self.rust_details,
             )
         } else {
             format!(
-                "{}:\n  Status: {:?}\n  Players: {}/{}\n  IP/Port: {}:{}",
-                self.name, self.status, self.players, self.max_players, self.ip, self.port
+                "{}:\n  Game: {}\n  Status: {:?}\n  Players: {}/{}\n  IP/Port: {}:{}",
+                self.name, game_fmt(&self.game), self.status, self.players, self.max_players, self.ip, self.port
             )
         }
     }
