@@ -2,6 +2,8 @@ mod api;
 
 use api::{query_server_info, query_server_players};
 use clap::{arg, Command};
+use crossterm::{cursor::MoveLeft, execute, style::Print};
+use std::io::stdout;
 
 pub fn cli() -> Command {
     Command::new("bq")
@@ -39,8 +41,9 @@ fn main() {
                     .expect("required")
                     .parse::<u32>()
                     .unwrap();
-                println!("Fetching server info for {}...", srv_id);
+                execute!(stdout(), Print("Fetching server info...")).unwrap();
                 let players = query_server_players(srv_id);
+                execute!(stdout(), MoveLeft(23), Print(" ".repeat(23)), MoveLeft(23)).unwrap();
                 match players {
                     Ok(players) => {
                         println!("Online players ({}):", players.len());
@@ -57,8 +60,9 @@ fn main() {
                     .expect("required")
                     .parse::<u32>()
                     .unwrap();
-                println!("Fetching server info for {}...", srv_id);
+                execute!(stdout(), Print("Fetching server info...")).unwrap();
                 let info = query_server_info(srv_id);
+                execute!(stdout(), MoveLeft(23), Print(" ".repeat(23)), MoveLeft(23)).unwrap();
                 match info {
                     Ok(info) => println!("{info}"),
                     Err(e) => println!("Error: {:?}", e),
