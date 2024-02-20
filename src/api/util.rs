@@ -7,6 +7,19 @@ pub fn bool_fmt(input: bool) -> &'static str {
     }
 }
 
+pub fn tf2_gamemode_fmt(input: &String) -> String {
+    match input.as_str() {
+        "arena" => "Arena",
+        "cp" => "Control Point",
+        "ctf" => "Capture the Flag",
+        "misc" => "Miscellaneous",
+        "mvm" => "Mann vs Machine",
+        "payload" => "Payload",
+        &_ => input.as_str(),
+    }
+    .to_owned()
+}
+
 pub fn game_fmt(input: &String) -> String {
     match input.as_str() {
         "7dtd" => "7 Days to Die",
