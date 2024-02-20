@@ -46,14 +46,14 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
         .to_owned();
 
     let details: Option<Box<dyn GameServerDetails>> = match game.as_str() {
-        "rust" => Some(Box::new(
-            serde_json::from_value::<RustServerDetails>(
+        "minecraft" => Some(Box::new(
+            serde_json::from_value::<MinecraftServerDetails>(
                 data["data"]["attributes"]["details"].to_owned(),
             )
             .unwrap(),
         )),
-        "minecraft" => Some(Box::new(
-            serde_json::from_value::<MinecraftServerDetails>(
+        "rust" => Some(Box::new(
+            serde_json::from_value::<RustServerDetails>(
                 data["data"]["attributes"]["details"].to_owned(),
             )
             .unwrap(),
