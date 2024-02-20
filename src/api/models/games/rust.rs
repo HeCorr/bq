@@ -47,7 +47,7 @@ impl GameServerDetails for RustServerDetails {
     Modded: {}
     Queued Players: {}
     Gamemode: {}
-    Description: {}\
+    Description: \n{}\
         ",
             bool_fmt(self.pve),
             self.map,

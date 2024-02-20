@@ -24,7 +24,7 @@ impl GameServerDetails for MinecraftServerDetails {
     Version: {} ({} [Protocol {}])
     Modded: {}
     Hash: {}
-    Description: {}
+    Description: \n{}\
         ",
             self.minecraft_version_name,
             self.minecraft_version.name,
