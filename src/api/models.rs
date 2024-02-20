@@ -39,7 +39,7 @@ pub struct Server {
     pub players: u32,
     #[serde(rename = "maxPlayers")]
     pub max_players: u32,
-    pub rank: u16,
+    pub rank: u32,
     #[serde(skip)]
     pub status: ServerStatus,
     pub private: bool,
