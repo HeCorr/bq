@@ -1,6 +1,5 @@
-use crate::api::util::bool_fmt;
-
 use super::GameServerDetails;
+use crate::api::util::bool_fmt;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]

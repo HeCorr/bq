@@ -1,7 +1,8 @@
 use super::GameServerDetails;
 use crate::api::util::bool_fmt;
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Deserialize, Debug)]
 pub struct RustServerDetails {
     pub pve: bool,
     pub map: String,
