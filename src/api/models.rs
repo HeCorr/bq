@@ -1,7 +1,7 @@
 pub mod games;
 
 use crate::api::util::{bool_fmt, game_fmt};
-use self::games::RustServerDetails;
+use self::games::GameServerDetails;
 
 #[derive(Debug)]
 pub struct Player {
@@ -34,14 +34,14 @@ pub struct Server {
     pub private: bool,
     pub country: String,
     pub online_players: Option<Vec<Player>>,
-    pub rust_details: Option<RustServerDetails>,
+    pub details: Option<Box<dyn GameServerDetails>>,
 }
 
 impl Server {
     pub fn fmt(&self, full: bool) -> String {
         if full {
             format!(
-                "{}:\n  Game: {}\n  Status: {:?}\n  Players: {}/{}\n  Country: {}\n  IP/Port: {}:{}\n  Address: {}\n  Private: {}\n  Rank: #{}\n  Details: {:#?}",
+                "{}:\n  Game: {}\n  Status: {:?}\n  Players: {}/{}\n  Country: {}\n  IP/Port: {}:{}\n  Address: {}\n  Private: {}\n  Rank: #{}\n  Details: {}",
                 self.name,
                 game_fmt(&self.game),
                 self.status, 
@@ -51,7 +51,7 @@ impl Server {
                 self.address.clone().unwrap_or("<None>".to_owned()),
                 bool_fmt(self.private),
                 self.rank,
-                self.rust_details,
+                self.details.as_ref().map(|x| x.fmt()).unwrap_or("<None>".into())
             )
         } else {
             format!(
