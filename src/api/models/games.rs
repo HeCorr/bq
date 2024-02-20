@@ -21,4 +21,7 @@ pub struct RustServerDetails {
     pub rust_modded: bool,
     pub rust_queued_players: u16,
     pub rust_gamemode: String,
+
+pub trait GameServerDetails {
+    fn fmt(&self) -> String;
 }
