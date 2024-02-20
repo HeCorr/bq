@@ -1,4 +1,5 @@
 pub mod minecraft;
+pub mod palworld;
 pub mod rust;
 pub mod tf2;
 
