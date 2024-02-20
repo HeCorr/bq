@@ -157,8 +157,8 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
         address: data["data"]["attributes"]["address"]
             .as_str()
             .map(|x| x.to_owned()),
-        players: u16::try_from(data["data"]["attributes"]["players"].as_u64().unwrap_or(0))?,
-        max_players: u16::try_from(
+        players: u32::try_from(data["data"]["attributes"]["players"].as_u64().unwrap_or(0))?,
+        max_players: u32::try_from(
             data["data"]["attributes"]["maxPlayers"]
                 .as_u64()
                 .unwrap_or(0),
