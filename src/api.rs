@@ -2,7 +2,10 @@ mod models;
 mod util;
 
 use self::models::{
-    games::{minecraft::MinecraftServerDetails, rust::RustServerDetails, GameServerDetails},
+    games::{
+        minecraft::MinecraftServerDetails, rust::RustServerDetails, tf2::TF2ServerDetails,
+        GameServerDetails,
+    },
     Player, Server, ServerStatus,
 };
 use anyhow::{anyhow, Result};
@@ -51,6 +54,12 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
         )),
         "minecraft" => Some(Box::new(
             serde_json::from_value::<MinecraftServerDetails>(
+                data["data"]["attributes"]["details"].to_owned(),
+            )
+            .unwrap(),
+        )),
+        "tf2" => Some(Box::new(
+            serde_json::from_value::<TF2ServerDetails>(
                 data["data"]["attributes"]["details"].to_owned(),
             )
             .unwrap(),
