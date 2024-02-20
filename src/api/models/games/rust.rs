@@ -46,7 +46,8 @@ impl GameServerDetails for RustServerDetails {
     World Level: {}
     Modded: {}
     Queued Players: {}
-    Gamemode: {}\
+    Gamemode: {}
+    Description: {}\
         ",
             bool_fmt(self.pve),
             self.map,
@@ -64,6 +65,7 @@ impl GameServerDetails for RustServerDetails {
             bool_fmt(self.rust_modded),
             self.rust_queued_players,
             self.rust_gamemode,
+            self.rust_description.replace("\\t", "\t"),
         )
     }
 }
