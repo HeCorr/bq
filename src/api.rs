@@ -135,11 +135,12 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
                 .as_bool()
                 .unwrap_or(false),
         })),
-        "minecraft" => {
-            let det: MinecraftServerDetails =
-                serde_json::from_value(data["data"]["attributes"]["details"].to_owned()).unwrap();
-            Some(Box::new(det))
-        }
+        "minecraft" => Some(Box::new(
+            serde_json::from_value::<MinecraftServerDetails>(
+                data["data"]["attributes"]["details"].to_owned(),
+            )
+            .unwrap(),
+        )),
         &_ => None,
     };
 
