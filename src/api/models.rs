@@ -2,8 +2,9 @@ pub mod games;
 
 use crate::api::util::{bool_fmt, game_fmt};
 use self::games::GameServerDetails;
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Deserialize, Debug)]
 pub struct Player {
     pub name: String,
 }
@@ -21,19 +22,31 @@ pub enum ServerStatus {
     Unknown,
 }
 
+impl Default for ServerStatus {
+    fn default() -> Self {
+        ServerStatus::Unknown
+    }
+}
+
+#[derive(Deserialize)]
 pub struct Server {
+    #[serde(skip)]
     pub game: String,
     pub name: String,
     pub ip: String,
     pub port: u16,
     pub address: Option<String>,
     pub players: u32,
+    #[serde(rename = "maxPlayers")]
     pub max_players: u32,
     pub rank: u16,
+    #[serde(skip)]
     pub status: ServerStatus,
     pub private: bool,
     pub country: String,
+    #[serde(skip)]
     pub online_players: Option<Vec<Player>>,
+    #[serde(skip)]
     pub details: Option<Box<dyn GameServerDetails>>,
 }
 

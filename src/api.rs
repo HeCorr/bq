@@ -58,40 +58,16 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
         &_ => None,
     };
 
-    Ok(Server {
-        game,
-        name: data["data"]["attributes"]["name"]
-            .as_str()
-            .unwrap_or("")
-            .to_owned(),
-        ip: data["data"]["attributes"]["ip"]
-            .as_str()
-            .unwrap_or("")
-            .to_owned(),
-        port: u16::try_from(data["data"]["attributes"]["port"].as_u64().unwrap_or(0))?,
-        address: data["data"]["attributes"]["address"]
-            .as_str()
-            .map(|x| x.to_owned()),
-        players: u32::try_from(data["data"]["attributes"]["players"].as_u64().unwrap_or(0))?,
-        max_players: u32::try_from(
-            data["data"]["attributes"]["maxPlayers"]
-                .as_u64()
-                .unwrap_or(0),
-        )?,
-        rank: u16::try_from(data["data"]["attributes"]["rank"].as_u64().unwrap_or(0))?,
-        status: match data["data"]["attributes"]["status"].as_str().unwrap_or("") {
-            "online" => ServerStatus::Online,
-            "offline" => ServerStatus::Offline,
-            _ => ServerStatus::Unknown,
-        },
-        private: data["data"]["attributes"]["private"]
-            .as_bool()
-            .unwrap_or(false),
-        country: data["data"]["attributes"]["country"]
-            .as_str()
-            .unwrap_or("")
-            .to_owned(),
-        online_players,
-        details,
-    })
+    let mut server =
+        serde_json::from_value::<Server>(data["data"]["attributes"].to_owned()).unwrap();
+
+    server.game = game;
+    server.details = details;
+    server.online_players = online_players;
+    server.status = match data["data"]["attributes"]["status"].as_str().unwrap_or("") {
+        "online" => ServerStatus::Online,
+        "offline" => ServerStatus::Offline,
+        _ => ServerStatus::Unknown,
+    };
+    Ok(server)
 }
