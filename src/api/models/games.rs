@@ -1,4 +1,5 @@
 pub mod arksa;
+pub mod dayz;
 pub mod minecraft;
 pub mod palworld;
 pub mod rust;

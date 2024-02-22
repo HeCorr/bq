@@ -3,7 +3,7 @@ mod util;
 
 use self::models::{
     games::{
-        arksa::ArkSAServerDetails, minecraft::MinecraftServerDetails,
+        arksa::ArkSAServerDetails, dayz::DayZServerDetails, minecraft::MinecraftServerDetails,
         palworld::PalworldServerDetails, rust::RustServerDetails, tf2::TF2ServerDetails,
         GameServerDetails,
     },
@@ -49,6 +49,12 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
     let details: Option<Box<dyn GameServerDetails>> = match game.as_str() {
         "arksa" => Some(Box::new(
             serde_json::from_value::<ArkSAServerDetails>(
+                data["data"]["attributes"]["details"].to_owned(),
+            )
+            .unwrap(),
+        )),
+        "dayz" => Some(Box::new(
+            serde_json::from_value::<DayZServerDetails>(
                 data["data"]["attributes"]["details"].to_owned(),
             )
             .unwrap(),
