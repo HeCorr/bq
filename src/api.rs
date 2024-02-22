@@ -95,6 +95,7 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
     server.status = match data["data"]["attributes"]["status"].as_str().unwrap_or("") {
         "online" => ServerStatus::Online,
         "offline" => ServerStatus::Offline,
+        "dead" => ServerStatus::Dead,
         _ => ServerStatus::Unknown,
     };
     Ok(server)

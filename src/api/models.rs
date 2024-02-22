@@ -19,6 +19,7 @@ impl std::fmt::Display for Player {
 pub enum ServerStatus {
     Online,
     Offline,
+    Dead,
     Unknown,
 }
 
