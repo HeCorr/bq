@@ -3,6 +3,7 @@ pub mod dayz;
 pub mod minecraft;
 pub mod palworld;
 pub mod rust;
+pub mod squad;
 pub mod tf2;
 
 pub trait GameServerDetails {

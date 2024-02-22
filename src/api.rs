@@ -4,8 +4,8 @@ mod util;
 use self::models::{
     games::{
         arksa::ArkSAServerDetails, dayz::DayZServerDetails, minecraft::MinecraftServerDetails,
-        palworld::PalworldServerDetails, rust::RustServerDetails, tf2::TF2ServerDetails,
-        GameServerDetails,
+        palworld::PalworldServerDetails, rust::RustServerDetails, squad::SquadServerDetails,
+        tf2::TF2ServerDetails, GameServerDetails,
     },
     Player, Server, ServerStatus,
 };
@@ -73,6 +73,12 @@ pub fn query_server_info(server_id: u32, include_online_players: bool) -> Result
         )),
         "rust" => Some(Box::new(
             serde_json::from_value::<RustServerDetails>(
+                data["data"]["attributes"]["details"].to_owned(),
+            )
+            .unwrap(),
+        )),
+        "squad" => Some(Box::new(
+            serde_json::from_value::<SquadServerDetails>(
                 data["data"]["attributes"]["details"].to_owned(),
             )
             .unwrap(),
