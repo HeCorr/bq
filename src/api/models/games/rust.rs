@@ -1,5 +1,5 @@
 use super::GameServerDetails;
-use crate::api::util::bool_fmt;
+use crate::api::util::{bool_fmt, BoolType};
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -49,9 +49,9 @@ impl GameServerDetails for RustServerDetails {
     Gamemode: {}
     Description: \n{}\
         ",
-            bool_fmt(self.pve),
+            bool_fmt(self.pve, BoolType::YesNo),
             self.map,
-            bool_fmt(self.official),
+            bool_fmt(self.official, BoolType::YesNo),
             self.rust_type,
             self.rust_build,
             self.rust_fps,
@@ -62,7 +62,7 @@ impl GameServerDetails for RustServerDetails {
             self.rust_world_seed,
             self.rust_world_size,
             self.rust_world_levelurl,
-            bool_fmt(self.rust_modded),
+            bool_fmt(self.rust_modded, BoolType::YesNo),
             self.rust_queued_players,
             self.rust_gamemode,
             self.rust_description.replace("\\t", "\t"),

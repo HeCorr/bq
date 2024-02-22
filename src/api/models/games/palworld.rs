@@ -1,5 +1,5 @@
 use super::GameServerDetails;
-use crate::api::util::bool_fmt;
+use crate::api::util::{bool_fmt, BoolType};
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -24,7 +24,7 @@ impl PalworldWorld {
     Creation Time: {}
         ",
             self.days_l,
-            bool_fmt(self.banticheatprotected_b),
+            bool_fmt(self.banticheatprotected_b, BoolType::YesNo),
             self.description_s,
             self.worldguid_s,
             self.create_time_l,
@@ -53,8 +53,8 @@ impl GameServerDetails for PalworldServerDetails {
         ",
             self.map,
             self.version,
-            bool_fmt(self.official),
-            bool_fmt(self.password),
+            bool_fmt(self.official, BoolType::YesNo),
+            bool_fmt(self.password, BoolType::YesNo),
             self.palworld.fmt(),
         )
     }

@@ -1,6 +1,6 @@
 pub mod games;
 
-use crate::api::util::{bool_fmt, game_fmt};
+use crate::api::util::{bool_fmt, game_fmt, BoolType};
 use self::games::GameServerDetails;
 use serde::Deserialize;
 
@@ -62,7 +62,7 @@ impl Server {
                 self.country,
                 self.ip, self.port,
                 self.address.clone().unwrap_or("<None>".to_owned()),
-                bool_fmt(self.private),
+                bool_fmt(self.private, BoolType::YesNo),
                 self.rank,
                 self.details.as_ref().map(|x| x.fmt()).unwrap_or("<None>".into())
             )

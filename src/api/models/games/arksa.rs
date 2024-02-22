@@ -1,5 +1,5 @@
 use super::GameServerDetails;
-use crate::api::util::bool_fmt;
+use crate::api::util::{bool_fmt, BoolType};
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -39,18 +39,18 @@ impl GameServerDetails for ArkSAServerDetails {
     Mods: {}\
         ",
             self.version,
-            bool_fmt(self.pve),
-            bool_fmt(self.official),
-            bool_fmt(self.password),
+            bool_fmt(self.pve, BoolType::YesNo),
+            bool_fmt(self.official, BoolType::YesNo),
+            bool_fmt(self.password, BoolType::YesNo),
             self.time_i,
             self.map,
-            bool_fmt(self.arksa_console),
-            bool_fmt(self.crossplay),
+            bool_fmt(self.arksa_console, BoolType::YesNo),
+            bool_fmt(self.crossplay, BoolType::YesNo),
             self.arksa_platforms
                 .is_empty()
                 .then(|| "<None>".to_owned())
                 .unwrap_or_else(|| self.arksa_platforms.join(", ")),
-            bool_fmt(self.modded),
+            bool_fmt(self.modded, BoolType::YesNo),
             self.mod_names
                 .is_empty()
                 .then(|| "<None>".to_owned())

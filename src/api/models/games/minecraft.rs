@@ -1,5 +1,5 @@
 use super::GameServerDetails;
-use crate::api::util::bool_fmt;
+use crate::api::util::{bool_fmt, BoolType};
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -29,7 +29,7 @@ impl GameServerDetails for MinecraftServerDetails {
             self.minecraft_version_name,
             self.minecraft_version.name,
             self.minecraft_version.protocol,
-            bool_fmt(self.minecraft_modded),
+            bool_fmt(self.minecraft_modded, BoolType::YesNo),
             self.minecraft_hash,
             self.minecraft_clean_description,
         )

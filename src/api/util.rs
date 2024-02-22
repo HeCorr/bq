@@ -1,9 +1,34 @@
+#[allow(dead_code)]
+pub enum BoolType {
+    YesNo,
+    EnabledDisabled,
+    AllowedDisabled,
+}
+
 /// Returns `Yes` if input is true, `No` otherwise.
-pub fn bool_fmt(input: bool) -> &'static str {
-    if input {
-        "Yes"
-    } else {
-        "No"
+pub fn bool_fmt(input: bool, fmt_type: BoolType) -> &'static str {
+    match fmt_type {
+        BoolType::YesNo => {
+            if input {
+                "Yes"
+            } else {
+                "No"
+            }
+        }
+        BoolType::EnabledDisabled => {
+            if input {
+                "Enabled"
+            } else {
+                "Disabled"
+            }
+        }
+        BoolType::AllowedDisabled => {
+            if input {
+                "Allowed"
+            } else {
+                "Disabled"
+            }
+        }
     }
 }
 

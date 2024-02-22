@@ -1,5 +1,5 @@
 use super::GameServerDetails;
-use crate::api::util::{bool_fmt, tf2_gamemode_fmt};
+use crate::api::util::{bool_fmt, tf2_gamemode_fmt, BoolType};
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -59,10 +59,13 @@ impl GameServerDetails for TF2ServerDetails {
     {}\
         ",
             self.map,
-            bool_fmt(self.password),
+            bool_fmt(self.password, BoolType::YesNo),
             self.tags,
             self.numbots,
-            self.gamemode.clone().map(|x| tf2_gamemode_fmt(&x)).unwrap_or("<Unknown>".into()),
+            self.gamemode
+                .clone()
+                .map(|x| tf2_gamemode_fmt(&x))
+                .unwrap_or("<Unknown>".into()),
             self.rules.fmt(),
         )
     }
